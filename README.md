@@ -1,3 +1,3 @@
 # site-de-AD
 site
-http://projetosarahribeiro/siteAD
+http://projetosarahribeiro/SiteAD/index.html
