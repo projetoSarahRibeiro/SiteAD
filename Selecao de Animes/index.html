@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo do Melhor Anime</title>
+  <style>
+    /* Estilo fofo */
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      background-color: #ffe7e0;
+      color: #5c5c5c;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #ff6f91;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 5px rgba(255, 105, 135, 0.5);
+    }
+
+    .round {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+      gap: 20px;
+    }
+
+    .anime {
+      position: relative;
+      width: 180px;
+      cursor: pointer;
+      border: 5px solid transparent;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fffaf5;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .anime img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 3px solid #ffd1dc;
+    }
+
+    .anime p {
+      margin: 0;
+      padding: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #5c5c5c;
+      text-align: center;
+    }
+
+    .anime:hover {
+      transform: scale(1.1);
+      border-color: #ffb6c1;
+      box-shadow: 0px 8px 15px rgba(255, 182, 193, 0.6);
+    }
+
+    .winner {
+      font-size: 2em;
+      margin-top: 40px;
+      color: #ff6f91;
+      text-shadow: 2px 2px 5px rgba(255, 105, 135, 0.5);
+      animation: popIn 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <h1>Escolha o Melhor Anime!</h1>
+  <div id="game-area" class="round"></div>
+  <p class="winner" id="winner-message"></p>
+
+  <script>
+    const allAnimes = [
+      { name: "Jujutsu Kaisen", img: "https://via.placeholder.com/200?text=Jujutsu+Kaisen" },
+      { name: "DanDanDan", img: "https://via.placeholder.com/200?text=DanDanDan" },
+      { name: "Attack on Titan", img: "https://via.placeholder.com/200?text=Attack+on+Titan" },
+      { name: "Nanatsu no Taizai", img: "https://via.placeholder.com/200?text=Nanatsu+no+Taizai" },
+      { name: "Kaguya-sama: Love is War", img: "https://via.placeholder.com/200?text=Kaguya-sama" },
+      { name: "Castlevania", img: "https://via.placeholder.com/200?text=Castlevania" },
+      { name: "Demon Slayer", img: "https://via.placeholder.com/200?text=Demon+Slayer" },
+      { name: "Diabolik Lovers", img: "https://via.placeholder.com/200?text=Diabolik+Lovers" },
+      { name: "Spy x Family", img: "https://via.placeholder.com/200?text=Spy+x+Family" },
+      { name: "My Hero Academia", img: "https://via.placeholder.com/200?text=MHA" },
+      { name: "Death Note", img: "https://via.placeholder.com/200?text=Death+Note" },
+      { name: "One Piece", img: "https://via.placeholder.com/200?text=One+Piece" }
+    ];
+
+    let currentRound = [];
+    let nextRound = [];
+    let usedAnimes = [];
+    let winnerFromPreviousRound = null;
+    let roundNumber = 1;
+
+    const gameArea = document.getElementById('game-area');
+    const winnerMessage = document.getElementById('winner-message');
+
+    function startRound() {
+      nextRound = [];
+      gameArea.innerHTML = '';
+
+      // Selecionar novos animes para cada rodada
+      let availableAnimes = allAnimes.filter(anime => !usedAnimes.includes(anime));
+
+      if (roundNumber === 1) {
+        currentRound = shuffleAnimes(availableAnimes).slice(0, 8);
+      } else if (roundNumber === 2) {
+        currentRound = shuffleAnimes(availableAnimes).slice(0, 3);
+        currentRound.push(winnerFromPreviousRound); // Adicionar o vencedor da rodada anterior
+      } else if (roundNumber === 3) {
+        currentRound = shuffleAnimes(availableAnimes).slice(0, 1);
+        currentRound.push(winnerFromPreviousRound); // Adicionar o vencedor da rodada anterior
+      }
+
+      // Adicionar os animes da rodada atual à lista de usados
+      usedAnimes = [...usedAnimes, ...currentRound];
+
+      for (let i = 0; i < currentRound.length; i += 2) {
+        const animePair = createAnimePair(currentRound[i], currentRound[i + 1]);
+        gameArea.appendChild(animePair);
+      }
+    }
+
+    function createAnimePair(anime1, anime2) {
+      const pairContainer = document.createElement('div');
+      pairContainer.classList.add('anime-pair');
+      pairContainer.style.display = 'flex';
+      pairContainer.style.gap = '20px';
+
+      const animeDiv1 = createAnimeDiv(anime1);
+      const animeDiv2 = createAnimeDiv(anime2);
+
+      animeDiv1.onclick = () => selectAnime(anime1);
+      animeDiv2.onclick = () => selectAnime(anime2);
+
+      pairContainer.appendChild(animeDiv1);
+      pairContainer.appendChild(animeDiv2);
+
+      return pairContainer;
+    }
+
+    function createAnimeDiv(anime) {
+      const animeDiv = document.createElement('div');
+      animeDiv.classList.add('anime');
+      animeDiv.innerHTML = `<img src="${anime.img}" alt="${anime.name}" /><p>${anime.name}</p>`;
+      return animeDiv;
+    }
+
+    function selectAnime(winner) {
+      nextRound.push(winner);
+
+      // Verifica se todos os pares foram escolhidos
+      if (nextRound.length === currentRound.length / 2) {
+        if (nextRound.length === 1) {
+          declareWinner(nextRound[0]);
+        } else {
+          winnerFromPreviousRound = nextRound[0]; // Salva o vencedor para a próxima rodada
+          roundNumber++;
+          startRound();
+        }
+      }
+    }
+
+    function declareWinner(winner) {
+      gameArea.innerHTML = '';
+      winnerMessage.textContent = `O Melhor Anime é: ${winner.name}! 🎉`;
+    }
+
+    function shuffleAnimes(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Inicia a primeira rodada
+    startRound();
+  </script>
+</body>
+</html>
