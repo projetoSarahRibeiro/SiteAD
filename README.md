@@ -1,3 +1,3 @@
 # site-de-AD
 site
-http://projetoSarahRibeiro/siteAD/Animes/index.html
+http://projetoSarahRibeiro/siteAD/Animes
