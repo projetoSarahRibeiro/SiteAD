@@ -4,74 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jogo do Melhor Anime</title>
-  <style>
-    /* Estilo fofo */
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      text-align: center;
-      background-color: #ffe7e0;
-      color: #5c5c5c;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      margin-top: 20px;
-      color: #ff6f91;
-      font-size: 2.5em;
-      text-shadow: 2px 2px 5px rgba(255, 105, 135, 0.5);
-    }
-
-    .round {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px;
-      gap: 20px;
-    }
-
-    .anime {
-      position: relative;
-      width: 180px;
-      cursor: pointer;
-      border: 5px solid transparent;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-      background-color: #fffaf5;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .anime img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-bottom: 3px solid #ffd1dc;
-    }
-
-    .anime p {
-      margin: 0;
-      padding: 10px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #5c5c5c;
-      text-align: center;
-    }
-
-    .anime:hover {
-      transform: scale(1.1);
-      border-color: #ffb6c1;
-      box-shadow: 0px 8px 15px rgba(255, 182, 193, 0.6);
-    }
-
-    .winner {
-      font-size: 2em;
-      margin-top: 40px;
-      color: #ff6f91;
-      text-shadow: 2px 2px 5px rgba(255, 105, 135, 0.5);
-      animation: popIn 0.6s ease-out;
-    }
-  </style>
+  <link rel="stylesheet" href="estilo.css">
+ 
 </head>
 <body>
   <h1>Escolha o Melhor Anime!</h1>
@@ -80,18 +14,18 @@
 
   <script>
     const allAnimes = [
-      { name: "Jujutsu Kaisen", img: "https://via.placeholder.com/200?text=Jujutsu+Kaisen" },
-      { name: "DanDanDan", img: "https://via.placeholder.com/200?text=DanDanDan" },
-      { name: "Attack on Titan", img: "https://via.placeholder.com/200?text=Attack+on+Titan" },
-      { name: "Nanatsu no Taizai", img: "https://via.placeholder.com/200?text=Nanatsu+no+Taizai" },
-      { name: "Kaguya-sama: Love is War", img: "https://via.placeholder.com/200?text=Kaguya-sama" },
-      { name: "Castlevania", img: "https://via.placeholder.com/200?text=Castlevania" },
-      { name: "Demon Slayer", img: "https://via.placeholder.com/200?text=Demon+Slayer" },
-      { name: "Diabolik Lovers", img: "https://via.placeholder.com/200?text=Diabolik+Lovers" },
-      { name: "Spy x Family", img: "https://via.placeholder.com/200?text=Spy+x+Family" },
-      { name: "My Hero Academia", img: "https://via.placeholder.com/200?text=MHA" },
-      { name: "Death Note", img: "https://via.placeholder.com/200?text=Death+Note" },
-      { name: "One Piece", img: "https://via.placeholder.com/200?text=One+Piece" }
+      { name: "Jujutsu Kaisen", img: "https://th.bing.com/th/id/OIP.UxE6oWXSQjtIGSncng-BIgHaLH?rs=1&pid=ImgDetMain" },
+      { name: "DanDanDan", img: "https://th.bing.com/th/id/R.83fb3525b19500d304fac1faa6b50811?rik=vIIYQNsFr6jJjw&pid=ImgRaw&r=0" },
+      { name: "Attack on Titan", img: "https://th.bing.com/th/id/R.cd4c1f6eff5a86e23e2b6d10e2678a22?rik=SKN2McDnOeKmsw&riu=http%3a%2f%2fimages6.fanpop.com%2fimage%2fphotos%2f35500000%2fUntitled-shingeki-no-kyojin-attack-on-titan-35593488-850-1397.jpg&ehk=s07%2bf2afelgVFXdZYgQMAd%2b6Evdi0BtfTFlh0nuM608%3d&risl=&pid=ImgRaw&r=0" },
+      { name: "Nanatsu no Taizai", img: "https://th.bing.com/th/id/R.560e6e58ab9d5aa76d4fdf9617edb755?rik=uE%2fq7%2fxmBSaLfg&pid=ImgRaw&r=0" },
+      { name: "Kaguya-sama: Love is War", img: "https://th.bing.com/th/id/R.5564c23a4e09e323de9b4a80fed89f98?rik=%2f%2bJBE2FxxjyjGw&pid=ImgRaw&r=0" },
+      { name: "Castlevania", img: "https://th.bing.com/th/id/R.8cef96b22d053c8dc0629f976d54ac58?rik=DV%2bknABcOL0cqQ&pid=ImgRaw&r=0" },
+      { name: "Demon Slayer", img: "https://th.bing.com/th/id/OIP.5ZTNAhxLvZ8CfgYAHwBZfwHaKe?rs=1&pid=ImgDetMain" },
+      { name: "Diabolik Lovers", img: "https://th.bing.com/th/id/OIP.idq3i1KfvB_WkVRYBIR_dwHaKg?rs=1&pid=ImgDetMain" },
+      { name: "Spy x Family", img: "https://th.bing.com/th/id/OIP.60TEaB9EKw0sEkNKrsikSQHaKo?rs=1&pid=ImgDetMain" },
+      { name: "My Hero Academia", img: "https://th.bing.com/th/id/R.dc5a8c5bcb61aa4631cb4972b0e96622?rik=Mk53FPbrBgQG6w&riu=http%3a%2f%2fmedia.comicbook.com%2f2018%2f04%2fmy-hero-academia-1100286.jpeg&ehk=rHKBogpIcQPFBYZHzR4U47%2fcwrsj%2f4JTpj2N6AgVxn4%3d&risl=&pid=ImgRaw&r=0" },
+      { name: "Death Note", img: "https://th.bing.com/th/id/R.c161b70a70703539fc4e83d52cf84c96?rik=KEnhzw65UTxLGw&riu=http%3a%2f%2fde.web.img3.acsta.net%2fmedias%2fnmedia%2f18%2f66%2f81%2f62%2f18957147.jpg&ehk=cFd3blTXf%2bPXViYdHopK%2bmSWBf7csJAhWCeL8mUCV6g%3d&risl=&pid=ImgRaw&r=0" },
+      { name: "One Piece", img: "https://th.bing.com/th/id/R.825dc060e925992501906eaa38b0da1b?rik=5Cg8OnaEqY2AtA&pid=ImgRaw&r=0" }
     ];
 
     let currentRound = [];
